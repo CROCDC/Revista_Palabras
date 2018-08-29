@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">Revista Palabras</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_helper">HelperActivity</string>
+    <string name="p_bajo_el_lema_estados_emocionales_entre_el_2_y_el_17_de_junio_se_realizar_el_festival_internacional_de_dramaturgia_una_invitaci_n_a_reflexionar_y_transitar_experiencias_con_foco_en_el_devenir_de_las_narrativas_contempor_neas_a_trav_s_de_trece_proyectos_que_involucran_a_m_s_de_100_artistas_de_distintos_pa_ses_espacio_callej_n_timbre4_teatro_p"><![CDATA[<p>Bajo el lema Estados emocionales, entre el 2 y el 17 de junio, se realizará el Festival Internacional de Dramaturgia, una invitación a reflexionar y transitar experiencias con foco en el devenir de las narrativas contemporáneas, a través de trece proyectos que involucran a más de 100 artistas de distintos países. Espacio Callejón, TIMBRe4, Teatro </p>]]></string>
+    <string name="se_estrena_joel_la_nueva_pel_cula_de_carlos_sor_n">Se estrena Joel, la nueva película de Carlos Sorín</string>
+    <string name="mundo_futbol_una_muestra_con_mas_de_150_fotografias_video_e_instalaciones">Mundo Futbol una muestra con mas de 150 fotografias video e instalaciones</string>
+    <string name="mundo_futbol_una_muestra_con_mas_de_150_fotografias_video_e_instalacionesmundo_futbol_una_muestra_con_mas_de_150_fotografias_video_e_instalacionesmundo_futbol_una_muestra_con_mas_de_150_fotografias_video_e_instalacionesmundo_futbol_una_muestra_con_mas_de_150_fotografias_video_e_instalacionesmundo_futbol_una_muestra_con_mas_de_150_fotografias_video_e_instalaciones">Mundo Futbol una muestra con mas de 150 fotografias video e instalacionesMundo Futbol una muestra con mas de 150 fotografias video e instalacionesMundo Futbol una muestra con mas de 150 fotografias video e instalacionesMundo Futbol una muestra con mas de 150 fotografias video e instalacionesMundo Futbol una muestra con mas de 150 fotografias video e instalaciones</string>
+    <string name="agenda_cultural">Agenda Cultural</string>
+    <string name="inicio">Inicio</string>
+    <string name="america">America</string>
+    <string name="android">Android</string>
+    <string name="arquitectura">Arquitectura</string>
+    <string name="artes_esc_nicas">Artes escénicas</string>
+    <string name="audiovisuales">Audiovisuales</string>
+    <string name="balances_y_perspectivas">Balances y Perspectivas</string>
+    <string name="ballet">Ballet</string>
+    <string name="cine_y_series">Cine y Series</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- Strings related to login -->
+    <string name="facebook_app_id">572263876492777</string>
+    <string name="fb_login_protocol_scheme">fb572263876492777</string>
+
+    <string name="com.twitter.sdk.android.CONSUMER_KEY">pI9J9sEJvSaE6RVsQXB4rUzc2</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET">zJK6yDI9uFumXRomuTufwftvUev8GdY5P94BbnBFBwtWLIfNFK</string>
+
+
+    <string name="invitado">Invitado</string>
+    <string name="favoritos">Favoritos</string>
+    <string name="busqueda_la_en_revista_palabras">Busqueda la en Revista Palabras</string>
+    <string name="breves">Breves</string>
+    <string name="inicio_de_sesion">Inicio de sesion</string>
+    <string name="fotografía">Fotografía</string>
+    <string name="literatura">Literatura</string>
+    <string name="ideas">Ideas</string>
+
+</resources>

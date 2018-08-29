@@ -1,0 +1,2 @@
+http://www.palabras.com.ar/wp-json/wp/v2/posts?page=2
+trae las notas

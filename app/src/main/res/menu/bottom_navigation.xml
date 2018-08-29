@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/opcionBreves"
+        android:title="@string/breves"
+        android:icon="@drawable/opcionbreves"
+        >
+
+    </item>
+
+
+
+    <item
+        android:id="@+id/opcionIncio"
+        android:title="@string/inicio"
+        android:icon="@drawable/inicio"
+        >
+
+    </item>
+    <item
+        android:id="@+id/opcionAgendaCultural"
+        android:title="@string/agenda_cultural"
+        android:icon="@drawable/calendar"
+        >
+
+    </item>
+
+</menu>
