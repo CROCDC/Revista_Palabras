@@ -2,6 +2,9 @@ package com.example.tcr.revistapalabras.View.Activitys;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -15,12 +18,14 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.tcr.revistapalabras.DAO.DAOApiPushNotification;
@@ -34,18 +39,21 @@ import com.example.tcr.revistapalabras.View.Fragments.FragmentUltimasNoticias;
 import com.example.tcr.revistapalabras.View.Fragments.FragmentNotasPorCategoria;
 import com.example.tcr.revistapalabras.View.Fragments.FragmentNoticiasBreves;
 import com.example.tcr.revistapalabras.View.Fragments.FragmentResultadoDeLaBusqueda;
+import com.example.tcr.revistapalabras.View.Fragments.I_NotificadorHaciaMainActivity;
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.shashank.sony.fancytoastlib.FancyToast;
 
-public class MainActivity extends AppCompatActivity implements FragmentUltimasNoticias.NotificadorHaciaMainActivity, FragmentNotasPorCategoria.NotificadorHaciaMainActivity, FragmentContenidoFavorito.NotificadorHaciaMainActivity, FragmentNoticiasBreves.NotificadorHaciaMainActivity,FragmentResultadoDeLaBusqueda.NotificadorHaciaMainActivity,FragmentAgendaCultural.NotificadorHaciaMainActivity {
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements I_NotificadorHaciaMainActivity {
 
     private View view;
 
 
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-    private ImageView imageViewLogOutOlogin;
+    private TextView textViewSesiones;
     private ImageView imageViewFotoDePerfil;
     private TextView textViewNombreDelUsuario;
 
@@ -89,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements FragmentUltimasNo
         textViewTituloRevistaPalabras = findViewById(R.id.textviewTituloRevistaPalabras_toolbar);
 
         header = navigationView.getHeaderView(0);
-        imageViewLogOutOlogin = header.findViewById(R.id.buttonActionsAcounts);
+        textViewSesiones = header.findViewById(R.id.buttonActionsAcounts);
         imageViewFotoDePerfil = header.findViewById(R.id.imageViewFotoDePerfil);
         textViewNombreDelUsuario = header.findViewById(R.id.textViewNombreDeUsuario);
         inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -123,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements FragmentUltimasNo
         });
 
 
-        imageViewLogOutOlogin.setOnClickListener(new View.OnClickListener() {
+        textViewSesiones.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (FirebaseAuth.getInstance().getCurrentUser() != null) {
@@ -159,24 +167,23 @@ public class MainActivity extends AppCompatActivity implements FragmentUltimasNo
             drawerLayout.closeDrawer(Gravity.START);
 
         } else {
-            try{
+            try {
                 if (posicionActual == 0) {
                     super.onBackPressed();
                 } else {
                     viewPagerPrincipal.setCurrentItem(posicionAnterior);
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 super.onBackPressed();
             }
         }
-
 
 
     }
 
     private void refreshNavView() {
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-            imageViewLogOutOlogin.setImageResource(R.drawable.logout);
+            textViewSesiones.setText("Cerrar Sesion");
             Glide.with(MainActivity.this)
                     .load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl())
                     .into(imageViewFotoDePerfil);
@@ -184,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements FragmentUltimasNo
 
 
         } else {
-            imageViewLogOutOlogin.setImageResource(R.drawable.login);
+            textViewSesiones.setText("Iniciar Sesion");
             imageViewFotoDePerfil.setImageResource(R.drawable.acountnegro);
             textViewNombreDelUsuario.setText("Invitado");
 
@@ -211,6 +218,33 @@ public class MainActivity extends AppCompatActivity implements FragmentUltimasNo
 
         overridePendingTransition(R.anim.entrada_por_arriba_activity, R.anim.salida_por_abajo);
 
+    }
+
+    @Override
+    public void notificarTouchPublicidad(String link) {
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(link));
+        startActivity(i);
+    }
+
+    @Override
+    public void notificarTouchRedSocial(Integer numero) {
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        switch (numero) {
+            case Helper.REFERENCIA_TWITTER:
+                i.setData(Uri.parse("https://twitter.com/PalabrasRevist"));
+                startActivity(i);
+                break;
+            case Helper.REFERENCIA_FACEBOOK:
+                i.setData(Uri.parse("https://www.facebook.com/www.palabras.la"));
+                startActivity(i);
+                break;
+
+            case Helper.REFERENCIA_INSTAGRAM:
+                i.setData(Uri.parse("https://www.instagram.com/revista_palabras/"));
+                startActivity(i);
+                break;
+        }
     }
 
 
@@ -249,13 +283,13 @@ public class MainActivity extends AppCompatActivity implements FragmentUltimasNo
                     cargarFragmentPorCategoria(Helper.CINEYSERIES, getString(R.string.cine_y_series));
                     break;
                 case R.id.opcionLiteratura:
-                    cargarFragmentPorCategoria(Helper.LITERATURA,getString(R.string.literatura));
+                    cargarFragmentPorCategoria(Helper.LITERATURA, getString(R.string.literatura));
                     break;
                 case R.id.opcionFotografía:
-                    cargarFragmentPorCategoria(Helper.FOTOGRAFIAS,getString(R.string.fotografía));
+                    cargarFragmentPorCategoria(Helper.FOTOGRAFIAS, getString(R.string.fotografía));
                     break;
                 case R.id.opcionIdeas:
-                    cargarFragmentPorCategoria(Helper.IDEAS,getString(R.string.ideas));
+                    cargarFragmentPorCategoria(Helper.IDEAS, getString(R.string.ideas));
                     break;
             }
             drawerLayout.closeDrawers();
@@ -307,19 +341,26 @@ public class MainActivity extends AppCompatActivity implements FragmentUltimasNo
     }
 
 
-
     public void touchSerchButton() {
         imageViewButtonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+
                 editTextCampoDeBusqueda.setVisibility(View.VISIBLE);
-                textViewTituloRevistaPalabras.setVisibility(View.INVISIBLE);
+                textViewTituloRevistaPalabras.setVisibility(View.GONE);
                 editTextCampoDeBusqueda.requestFocus();
                 editTextCampoDeBusqueda.requestFocus(View.FOCUS_DOWN);
                 editTextCampoDeBusqueda.setFocusableInTouchMode(true);
 
                 inputMethodManager.showSoftInput(editTextCampoDeBusqueda, InputMethodManager.SHOW_IMPLICIT);
+                if (!(editTextCampoDeBusqueda.getText().toString().equals(""))) {
+                    cargarFragment(FragmentResultadoDeLaBusqueda.fabricaDeFragmentsResultadoDeLaBusqueda(editTextCampoDeBusqueda.getText().toString()));
+
+                    textViewTituloRevistaPalabras.setVisibility(View.VISIBLE);
+                    editTextCampoDeBusqueda.setVisibility(View.INVISIBLE);
+                    editTextCampoDeBusqueda.setText("");
+                }
                 editTextCampoDeBusqueda.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
@@ -337,6 +378,22 @@ public class MainActivity extends AppCompatActivity implements FragmentUltimasNo
                 });
             }
         });
+
+        editTextCampoDeBusqueda.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+
+                if (!(editTextCampoDeBusqueda.getText().toString().equals(""))) {
+                    cargarFragment(FragmentResultadoDeLaBusqueda.fabricaDeFragmentsResultadoDeLaBusqueda(editTextCampoDeBusqueda.getText().toString()));
+
+                    textViewTituloRevistaPalabras.setVisibility(View.VISIBLE);
+                    editTextCampoDeBusqueda.setVisibility(View.GONE);
+                    editTextCampoDeBusqueda.setText("");
+                }
+                return false;
+            }
+        });
+
     }
 
     public void informacionScrollViewPager() {
@@ -362,6 +419,7 @@ public class MainActivity extends AppCompatActivity implements FragmentUltimasNo
             }
         });
     }
+
     public void loginExitoso() {
         FancyToast.makeText(this, "Login exitoso", FancyToast.LENGTH_LONG, FancyToast.SUCCESS, false).show();
 

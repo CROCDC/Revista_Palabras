@@ -12,10 +12,10 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.TextView;
-
 import com.example.tcr.revistapalabras.Model.Noticia;
 import com.example.tcr.revistapalabras.R;
 import com.example.tcr.revistapalabras.Utils.ResultListener;
+
 import com.example.tcr.revistapalabras.View.Adapter.NoticiasAdapter;
 import com.example.tcr.revistapalabras.Controler.ControlerContenidoFavoritoFirebase;
 
@@ -31,7 +31,9 @@ public class FragmentContenidoFavorito extends Fragment {
     private RecyclerView recyclerViewFavoritos;
     private TextView textViewNombreDeLaCategoria;
     private static NoticiasAdapter noticiasAdapter;
-    private static NotificadorHaciaMainActivity notificador;
+    private static I_NotificadorHaciaMainActivity notificador;
+
+
 
     public FragmentContenidoFavorito() {
         // Required empty public constructor
@@ -40,7 +42,7 @@ public class FragmentContenidoFavorito extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        notificador = (NotificadorHaciaMainActivity) context;
+        notificador = (I_NotificadorHaciaMainActivity) context;
     }
 
     public static FragmentContenidoFavorito fabricaDeFragmentContenidoFavorito() {
@@ -55,8 +57,18 @@ public class FragmentContenidoFavorito extends Fragment {
 
         noticiasAdapter = new NoticiasAdapter(new NoticiasAdapter.Notificador() {
             @Override
-            public void notificar(Noticia unaNoticia) {
+            public void notificarTouchCelda(Noticia unaNoticia) {
                 notificador.notificar(unaNoticia);
+            }
+
+            @Override
+            public void notificarTouchPublicidad(String link) {
+                notificador.notificarTouchPublicidad(link);
+            }
+
+            @Override
+            public void notificarTouchRedSocial(Integer numero) {
+                notificador.notificarTouchRedSocial(numero);
             }
         });
         new ControlerContenidoFavoritoFirebase().pedirListaDeNoticiasFavoritas(new ResultListener<List<Noticia>>() {
@@ -104,8 +116,8 @@ public class FragmentContenidoFavorito extends Fragment {
         return view;
     }
 
-    public interface NotificadorHaciaMainActivity {
-        public void notificar(Noticia noticia);
-    }
+
+
+
 
 }

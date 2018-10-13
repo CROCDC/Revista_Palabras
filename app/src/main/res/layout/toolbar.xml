@@ -12,41 +12,51 @@
         android:layout_height="60dp"
         android:background="@color/negro">
 
-        <RelativeLayout
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <ImageView
+                android:layout_gravity="center_vertical"
                 android:id="@+id/imageViewMenuAmburguesa_toolbar"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:layout_marginTop="13dp"
+
                 android:src="@drawable/menuhamburguesa" />
 
+
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_width="54dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/logo" />
+
             <TextView
+                android:layout_gravity="center_vertical"
                 android:id="@+id/textviewTituloRevistaPalabras_toolbar"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:paddingLeft="80dp"
+                android:paddingLeft="5dp"
                 android:text="@string/app_name"
                 android:textColor="@color/blanco"
                 android:textSize="24sp" />
 
             <ImageView
+                android:layout_gravity="center_vertical"
                 android:id="@+id/imageViewButtonSearch_toolbar"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="30dp"
-                android:layout_toRightOf="@id/textviewTituloRevistaPalabras_toolbar"
+                android:layout_marginStart="20dp"
                 android:src="@drawable/search" />
 
             <EditText
+                android:layout_gravity="center_vertical"
                 android:id="@+id/editTextBusqueda_toolbar"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
                 android:layout_toLeftOf="@id/imageViewButtonSearch_toolbar"
                 android:hint="@string/busqueda_la_en_revista_palabras"
                 android:inputType="text"
@@ -58,7 +68,7 @@
             </EditText>
 
 
-        </RelativeLayout>
+        </LinearLayout>
     </android.support.v7.widget.Toolbar>
 
 </LinearLayout>

@@ -28,7 +28,17 @@ public class BusquedaActivity extends AppCompatActivity {
 
         noticiasAdapter = new NoticiasAdapter(new NoticiasAdapter.Notificador() {
             @Override
-            public void notificar(Noticia unNoticia) {
+            public void notificarTouchCelda(Noticia unNoticia) {
+
+            }
+
+            @Override
+            public void notificarTouchPublicidad(String link) {
+
+            }
+
+            @Override
+            public void notificarTouchRedSocial(Integer numero) {
 
             }
         });

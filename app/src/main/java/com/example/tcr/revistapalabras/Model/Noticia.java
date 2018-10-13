@@ -11,7 +11,7 @@ import java.util.Objects;
  * Created by TCR on 05/06/2018.
  */
 
-public class Noticia implements Serializable {
+public class Noticia extends RecyclerViewItem implements Serializable  {
     private Integer id;
     private String date_gmt;//la hora en que fue publicada
     private String link;

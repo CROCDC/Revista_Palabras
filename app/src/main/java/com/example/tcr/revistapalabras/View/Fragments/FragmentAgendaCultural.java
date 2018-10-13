@@ -5,24 +5,21 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.azoft.carousellayoutmanager.CarouselLayoutManager;
 import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
-import com.azoft.carousellayoutmanager.CenterScrollListener;
 import com.example.tcr.revistapalabras.Controler.ControlerNoticias;
 import com.example.tcr.revistapalabras.Model.Noticia;
 import com.example.tcr.revistapalabras.R;
 import com.example.tcr.revistapalabras.Utils.Helper;
 import com.example.tcr.revistapalabras.Utils.ResultListener;
 import com.example.tcr.revistapalabras.View.Adapter.AgendaAdapter;
-import com.example.tcr.revistapalabras.View.Adapter.NoticiasAdapter;
 
 import java.util.List;
 
@@ -36,9 +33,16 @@ public class FragmentAgendaCultural extends Fragment {
     private CarouselLayoutManager layoutManager;
 
 
+    private LinearLayout linearLayoutContenedor;
     private RecyclerView recyclerView;
 
-    private NotificadorHaciaMainActivity notificador;
+    private ImageView imageViewTwitter;
+    private ImageView imageViewFacebook;
+    private ImageView imageViewInstagram;
+    private ImageView imageViewPublicidad4;
+
+
+    private I_NotificadorHaciaMainActivity notificador;
 
     public FragmentAgendaCultural() {
         // Required empty public constructor
@@ -47,7 +51,7 @@ public class FragmentAgendaCultural extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        notificador = (NotificadorHaciaMainActivity) context;
+        notificador = (I_NotificadorHaciaMainActivity) context;
 
     }
 
@@ -59,12 +63,23 @@ public class FragmentAgendaCultural extends Fragment {
             public void notificar(Noticia noticia) {
                 notificador.notificar(noticia);
             }
+
+            @Override
+            public void notificarTouchRedSocial(Integer numero) {
+                notificador.notificarTouchRedSocial(numero);
+            }
+
+            @Override
+            public void notificarTouchPublicidad(String link) {
+                notificador.notificarTouchPublicidad(link);
+            }
         });
-        new ControlerNoticias().pedirListaDeNoticiassDeLaAgenda(1, 4, new ResultListener<List<Noticia>>() {
+        new ControlerNoticias().pedirListaDeNoticiassDeLaAgenda(1, 9, new ResultListener<List<Noticia>>() {
             @Override
             public void finish(List<Noticia> resultado) {
                 Helper.setearImagenesAUnaListaDeContenidoDeLaAgenda(agendaAdapter, resultado);
-                agendaAdapter.setListaDeNoticia(resultado);
+                agendaAdapter.setListaDeItems(resultado);
+                agendaAdapter.agregarFooter();
             }
         });
     }
@@ -83,17 +98,14 @@ public class FragmentAgendaCultural extends Fragment {
         recyclerView.setHasFixedSize(true);
 
 
-
         recyclerView.setLayoutManager(layoutManager);
 
-
         recyclerView.setAdapter(agendaAdapter);
+
 
 
         return view;
     }
 
-    public interface NotificadorHaciaMainActivity {
-        public void notificar(Noticia noticia);
-    }
+
 }

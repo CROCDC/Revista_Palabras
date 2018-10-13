@@ -5,6 +5,7 @@ import com.example.tcr.revistapalabras.Model.Noticia;
 import com.example.tcr.revistapalabras.Utils.Helper;
 import com.example.tcr.revistapalabras.Utils.ResultListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ControlerNoticias {
@@ -20,20 +21,31 @@ public class ControlerNoticias {
     }
 
     public void pedirListaDeLasUltimasNoticiasPublicadas(final ResultListener<List<Noticia>> escuchadorDeLaVista) {
+
+        if (paginaActual > 3) {
+            escuchadorDeLaVista.finish(new ArrayList<Noticia>());
+            return;
+        }
+
         new DAONoticiaRetrofit().pedirListaDeLasUltimasNoticiasPublicadas(new ResultListener<List<Noticia>>() {
 
             @Override
             public void finish(final List<Noticia> resultado) {
 
-                Helper.acomodarPreviewDeNotasPorLista(resultado);
 
-                Helper.eliminarNoticiasBrevesYAgenda(resultado);
 
-                escuchadorDeLaVista.finish(resultado);
 
-                setPaginaActual(paginaActual += 1);
 
-            }
+                    Helper.acomodarPreviewDeNotasPorLista(resultado);
+
+                    Helper.eliminarNoticiasBrevesYAgenda(resultado);
+
+                    escuchadorDeLaVista.finish(resultado);
+
+                    setPaginaActual(paginaActual += 1);
+                }
+
+
         }, paginaActual);
     }
 
@@ -47,6 +59,12 @@ public class ControlerNoticias {
     }
 
     public void pedirListaDeNoticiasPorCategoria(final ResultListener<List<Noticia>> escuchadorDeLaVista, Integer categoria) {
+        if (paginaActual > 3){
+            List<Noticia> list = new ArrayList<>();
+            escuchadorDeLaVista.finish(list);
+            return;
+        }
+
         new DAONoticiaRetrofit().pedirListaDeNotasPorCategoria(new ResultListener<List<Noticia>>() {
             @Override
             public void finish(List<Noticia> resultado) {

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.tcr.revistapalabras.Controler.ControlerNoticias;
+import com.example.tcr.revistapalabras.Model.Footer;
 import com.example.tcr.revistapalabras.Model.Noticia;
 import com.example.tcr.revistapalabras.R;
 import com.example.tcr.revistapalabras.Utils.Helper;
@@ -31,7 +32,7 @@ public class FragmentNoticiasBreves extends Fragment {
 
     private NoticiasAdapter noticiasAdapter;
 
-    private NotificadorHaciaMainActivity notificador;
+    private I_NotificadorHaciaMainActivity notificador;
 
     private Boolean estaCargando;
 
@@ -46,7 +47,7 @@ public class FragmentNoticiasBreves extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        notificador = (NotificadorHaciaMainActivity) context;
+        notificador = (I_NotificadorHaciaMainActivity) context;
     }
 
     @Override
@@ -57,9 +58,19 @@ public class FragmentNoticiasBreves extends Fragment {
 
         noticiasAdapter = new NoticiasAdapter(new NoticiasAdapter.Notificador() {
             @Override
-            public void notificar(Noticia unaNoticia) {
+            public void notificarTouchCelda(Noticia unaNoticia) {
                 notificador.notificar(unaNoticia);
 
+            }
+
+            @Override
+            public void notificarTouchPublicidad(String link) {
+                notificador.notificarTouchPublicidad(link);
+            }
+
+            @Override
+            public void notificarTouchRedSocial(Integer numero) {
+                notificador.notificarTouchRedSocial(numero);
             }
         });
         controlerNoticias.pedirListaDeNoticiasPorCategoria(new ResultListener<List<Noticia>>() {
@@ -103,8 +114,14 @@ public class FragmentNoticiasBreves extends Fragment {
                     controlerNoticias.pedirListaDeNoticiasPorCategoria(new ResultListener<List<Noticia>>() {
                         @Override
                         public void finish(List<Noticia> resultado) {
-                            estaCargando = false;
-                            noticiasAdapter.agregarNotasALaLista(resultado);
+                            if (resultado.isEmpty()){
+                                noticiasAdapter.agregarFooter(new Footer());
+                            }else {
+
+                                estaCargando = false;
+                                noticiasAdapter.agregarNotasALaLista(resultado);
+                            }
+
                         }
                     }, Helper.BREVES);
                 }
@@ -114,8 +131,6 @@ public class FragmentNoticiasBreves extends Fragment {
         return view;
     }
 
-    public interface NotificadorHaciaMainActivity {
-        public void notificar(Noticia noticia);
-    }
+
 
 }

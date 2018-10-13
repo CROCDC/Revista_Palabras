@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.tcr.revistapalabras.Controler.ControlerNoticias;
+import com.example.tcr.revistapalabras.Model.Footer;
 import com.example.tcr.revistapalabras.Model.Noticia;
 import com.example.tcr.revistapalabras.R;
 import com.example.tcr.revistapalabras.Utils.ResultListener;
@@ -31,7 +32,7 @@ public class FragmentResultadoDeLaBusqueda extends Fragment {
 
     private NoticiasAdapter noticiasAdapter;
 
-    private NotificadorHaciaMainActivity notificador;
+    private I_NotificadorHaciaMainActivity notificador;
 
     public FragmentResultadoDeLaBusqueda() {
         // Required empty public constructor
@@ -53,7 +54,7 @@ public class FragmentResultadoDeLaBusqueda extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        notificador = (NotificadorHaciaMainActivity) context;
+        notificador = (I_NotificadorHaciaMainActivity) context;
     }
 
     @Override
@@ -66,8 +67,18 @@ public class FragmentResultadoDeLaBusqueda extends Fragment {
 
         noticiasAdapter = new NoticiasAdapter(new NoticiasAdapter.Notificador() {
             @Override
-            public void notificar(Noticia unaNoticia) {
+            public void notificarTouchCelda(Noticia unaNoticia) {
                 notificador.notificar(unaNoticia);
+            }
+
+            @Override
+            public void notificarTouchPublicidad(String link) {
+                notificador.notificarTouchPublicidad(link);
+            }
+
+            @Override
+            public void notificarTouchRedSocial(Integer numero) {
+                notificador.notificarTouchRedSocial(numero);
             }
         });
 
@@ -75,6 +86,7 @@ public class FragmentResultadoDeLaBusqueda extends Fragment {
             @Override
             public void finish(List<Noticia> resultado) {
                 noticiasAdapter.setListaDeNoticias(resultado);
+                noticiasAdapter.agregarFooter(new Footer());
             }
         });
 
@@ -95,7 +107,5 @@ public class FragmentResultadoDeLaBusqueda extends Fragment {
         return view;
     }
 
-    public interface NotificadorHaciaMainActivity {
-        public void notificar(Noticia noticia);
-    }
+
 }

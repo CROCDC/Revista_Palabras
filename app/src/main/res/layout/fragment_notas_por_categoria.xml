@@ -10,6 +10,7 @@
 
 
     <TextView
+
         android:id="@+id/textViewNombreDeLaCategoria_fragmentnotasporcategoria"
         android:gravity="center"
         android:textSize="30sp"
@@ -18,11 +19,11 @@
 
 
     <android.support.v7.widget.RecyclerView
-        android:layout_marginBottom="30dp"
+
         android:background="@color/blanco"
         android:id="@+id/recyclerViewCategorias_fragmentnotasporcategoria"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
     </android.support.v7.widget.RecyclerView>
 

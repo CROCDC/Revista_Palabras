@@ -14,6 +14,7 @@ import android.view.animation.LayoutAnimationController;
 import android.widget.TextView;
 
 import com.example.tcr.revistapalabras.Controler.ControlerNoticias;
+import com.example.tcr.revistapalabras.Model.Footer;
 import com.example.tcr.revistapalabras.Model.Noticia;
 import com.example.tcr.revistapalabras.R;
 import com.example.tcr.revistapalabras.Utils.ResultListener;
@@ -35,12 +36,12 @@ public class FragmentNotasPorCategoria extends Fragment {
     private static Boolean estaCargando;
     private static Integer categoriaGlobal;
 
-    private static NotificadorHaciaMainActivity notificador;
+    private static I_NotificadorHaciaMainActivity notificador;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        notificador = (NotificadorHaciaMainActivity) context;
+        notificador = (I_NotificadorHaciaMainActivity) context;
     }
     public static FragmentNotasPorCategoria fabricaDeFragmentPorCategoria(Integer categoria, String nombreDeLaCategoria) {
 
@@ -55,8 +56,18 @@ public class FragmentNotasPorCategoria extends Fragment {
         fragmentNotasPorCategoria.setArguments(bundle);
         noticiasAdapter = new NoticiasAdapter(new NoticiasAdapter.Notificador() {
             @Override
-            public void notificar(Noticia unNoticia) {
+            public void notificarTouchCelda(Noticia unNoticia) {
                 notificador.notificar(unNoticia);
+            }
+
+            @Override
+            public void notificarTouchPublicidad(String link) {
+                notificador.notificarTouchPublicidad(link);
+            }
+
+            @Override
+            public void notificarTouchRedSocial(Integer numero) {
+                notificador.notificarTouchRedSocial(numero);
             }
         });
 
@@ -128,8 +139,14 @@ public class FragmentNotasPorCategoria extends Fragment {
                     controlerNoticias.pedirListaDeNoticiasPorCategoria(new ResultListener<List<Noticia>>() {
                         @Override
                         public void finish(List<Noticia> resultado) {
-                            estaCargando = false;
-                            noticiasAdapter.agregarNotasALaLista(resultado);
+
+                            if (resultado.isEmpty()){
+                                noticiasAdapter.agregarFooter(new Footer());
+                            }else {
+                                estaCargando = false;
+                                noticiasAdapter.agregarNotasALaLista(resultado);
+                            }
+
                         }
                     },categoriaGlobal);
                 }
@@ -139,7 +156,4 @@ public class FragmentNotasPorCategoria extends Fragment {
         return view;
     }
 
-    public interface NotificadorHaciaMainActivity {
-        public void notificar(Noticia noticia);
-    }
 }

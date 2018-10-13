@@ -37,7 +37,6 @@ public class Helper {
 
     public static final int FOTOGRAFIAS = 39;
 
-
     public static final int ARQUITECTURA = 57;
 
     public static final int ARTESESCENICAS = 49;
@@ -53,6 +52,15 @@ public class Helper {
     public static final int AGENDA = 34;
 
     public static final String REFERENCIA_CONTENIDO_FAVORITO = "Notas Favoritas";
+
+    public static final String REFERENCIA_PUBLICIDADES ="publicidades";
+
+    public static final int REFERENCIA_TWITTER = 0;
+
+    public static final int REFERENCIA_FACEBOOK = 1;
+
+    public static final int REFERENCIA_INSTAGRAM = 2;
+
 
 
     //Removedor de etiquetas HMTL

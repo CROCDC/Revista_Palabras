@@ -18,23 +18,26 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/imageViewFotoDePerfil"
         android:layout_marginLeft="20dp"
-        android:text="@string/invitado" />
+        android:text="@string/invitado"
+        android:textColor="@color/negro"
+        android:textSize="20sp" />
 
-    <ImageView
+    <TextView
         android:id="@+id/buttonActionsAcounts"
-        android:layout_marginRight="18dp"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignBaseline="@id/textViewNombreDeUsuario"
-        android:src="@drawable/opcionballet" />
+        android:layout_margin="10dp"
+        android:textColor="@color/negro"
+        android:textSize="20sp" />
 
     <ImageView
-        android:layout_below="@id/buttonActionsAcounts"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
+        android:layout_below="@id/buttonActionsAcounts"
         android:src="@drawable/lineagris" />
 
 

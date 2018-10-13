@@ -4,7 +4,6 @@ package com.example.tcr.revistapalabras.View.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,10 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
-import android.widget.ProgressBar;
+import android.widget.LinearLayout;
 
 
 import com.example.tcr.revistapalabras.Controler.ControlerNoticias;
+import com.example.tcr.revistapalabras.Model.Footer;
 import com.example.tcr.revistapalabras.Model.Noticia;
 import com.example.tcr.revistapalabras.R;
 import com.example.tcr.revistapalabras.Utils.ResultListener;
@@ -33,14 +33,14 @@ public class FragmentUltimasNoticias extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private NoticiasAdapter noticiasAdapter;
     private ControlerNoticias controlerNoticias;
-    private NotificadorHaciaMainActivity notificador;
-    private ProgressBar progressBar;
+    private I_NotificadorHaciaMainActivity notificador;
+    private LinearLayout linearLayoutContenedorRedesSociales;
 
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.notificador = (NotificadorHaciaMainActivity) context;
+        this.notificador = (I_NotificadorHaciaMainActivity) context;
     }
 
     @Override
@@ -50,8 +50,18 @@ public class FragmentUltimasNoticias extends Fragment {
         controlerNoticias = new ControlerNoticias();
         noticiasAdapter = new NoticiasAdapter(new NoticiasAdapter.Notificador() {
             @Override
-            public void notificar(Noticia unNoticia) {
+            public void notificarTouchCelda(Noticia unNoticia) {
                 notificador.notificar(unNoticia);
+            }
+
+            @Override
+            public void notificarTouchPublicidad(String link) {
+                notificador.notificarTouchPublicidad(link);
+            }
+
+            @Override
+            public void notificarTouchRedSocial(Integer numero) {
+                notificador.notificarTouchRedSocial(numero);
             }
         });
 
@@ -72,10 +82,11 @@ public class FragmentUltimasNoticias extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_dentro_del_main_activty, container, false);
+        View view = inflater.inflate(R.layout.fragment_ultimas_noticias, container, false);
 
 
         recyclerViewNotas = view.findViewById(R.id.recyclerViewNotas_fragmentdentrodelmainactivity);
+        linearLayoutContenedorRedesSociales = view.findViewById(R.id.linearLayoutContenedorredessociales_fragmentultimasnoticias);
 
 
         recyclerViewNotas.setHasFixedSize(true);
@@ -94,7 +105,7 @@ public class FragmentUltimasNoticias extends Fragment {
 
         recyclerViewNotas.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            public void onScrolled(final RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
                 if (isLoading) {
@@ -110,8 +121,16 @@ public class FragmentUltimasNoticias extends Fragment {
                         @Override
                         public void finish(final List<Noticia> resultado) {
 
-                            isLoading = false;
-                            noticiasAdapter.agregarNotasALaLista(resultado);
+
+                            if (resultado.isEmpty()){
+                                noticiasAdapter.agregarFooter(new Footer());
+                            }else {
+                                isLoading = false;
+                                noticiasAdapter.agregarNotasALaLista(resultado);
+                            }
+
+
+
 
                         }
 
@@ -120,10 +139,13 @@ public class FragmentUltimasNoticias extends Fragment {
                 }
             }
         });
+
         return view;
+
+
     }
 
-    public interface NotificadorHaciaMainActivity {
-        void notificar(Noticia unaNoticia);
-    }
+
+
+
 }

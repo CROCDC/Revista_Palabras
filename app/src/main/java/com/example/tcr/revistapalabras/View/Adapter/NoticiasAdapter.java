@@ -2,6 +2,7 @@ package com.example.tcr.revistapalabras.View.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +10,17 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.example.tcr.revistapalabras.Controler.ControllerPublicidadesFirebase;
+import com.example.tcr.revistapalabras.Model.Footer;
+import com.example.tcr.revistapalabras.Model.Publicidad;
+import com.example.tcr.revistapalabras.Model.RecyclerViewItem;
 import com.example.tcr.revistapalabras.Model.Noticia;
 import com.example.tcr.revistapalabras.Model.Imagen;
 import com.example.tcr.revistapalabras.R;
 import com.example.tcr.revistapalabras.Utils.Helper;
+import com.example.tcr.revistapalabras.Utils.ResultListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,33 +31,31 @@ public class NoticiasAdapter extends RecyclerView.Adapter {
 
     private Context context;
     private Notificador notificador;
+    private NotasViewHolder notasViewHolder;
+    private List<RecyclerViewItem> listaItems = new ArrayList<>();
+
+    public static final int TIPO_NOTICIA = 0;
+    public static final int TIPO_FOOTER = 1;
 
     public int lastPosition;
 
     public void setListaDeNoticias(List<Noticia> listaDeNoticias) {
-        this.listaDeNoticias = listaDeNoticias;
+
+        listaItems.addAll(listaDeNoticias);
         notifyDataSetChanged();
     }
 
     public void agregarNotasALaLista(List<Noticia> listaDeNotasAgregar) {
-        this.listaDeNoticias.addAll(listaDeNotasAgregar);
+        listaItems.addAll(listaDeNotasAgregar);
         notifyDataSetChanged();
     }
 
-    public void agregarAListaDeNotas(Noticia noticia) {
-        listaDeNoticias.add(noticia);
+    public void agregarFooter(Footer footer) {
+        listaItems.add(footer);
         notifyDataSetChanged();
+
     }
 
-    public void setRutaDeImagen(List<Imagen> rutaDeImagen) {
-        this.rutasDeImagenes = rutaDeImagen;
-        notifyDataSetChanged();
-    }
-
-    public void agregarRutaDeImagen(Imagen rutaDeImagen) {
-        rutasDeImagenes.add(rutaDeImagen);
-        notifyDataSetChanged();
-    }
 
     public NoticiasAdapter(Notificador notificador) {
         listaDeNoticias = new ArrayList<>();
@@ -66,37 +70,80 @@ public class NoticiasAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
+        View viewDeLaCelda;
 
-        View viewDeLaCelda = layoutInflater.inflate(R.layout.celda_nota, parent, false);
 
-        NotasViewHolder notasViewHolder = new NotasViewHolder(viewDeLaCelda);
-        return notasViewHolder;
+        if (viewType == TIPO_NOTICIA) {
+
+            viewDeLaCelda = layoutInflater.inflate(R.layout.celda_nota, parent, false);
+
+            notasViewHolder = new NotasViewHolder(viewDeLaCelda);
+
+
+            return notasViewHolder;
+        } else if (viewType == TIPO_FOOTER) {
+            viewDeLaCelda = layoutInflater.inflate(R.layout.footer_recyclerview,parent,false);
+
+
+            return new FooterViewHolder(viewDeLaCelda);
+
+
+        }
+
+        return null;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Noticia noticia = listaDeNoticias.get(position);
 
-        NotasViewHolder notasViewHolder = (NotasViewHolder) holder;
+        if (holder instanceof NotasViewHolder){
+            Noticia noticia = (Noticia) listaItems.get(position);
 
 
-        //animacion de entrada de items
-        if (position > lastPosition) {
+            NotasViewHolder notasViewHolder = (NotasViewHolder) holder;
 
-            Animation animation = AnimationUtils.loadAnimation(context,
-                    R.anim.entrada_por_arriba);
-            notasViewHolder.itemView.startAnimation(animation);
-            lastPosition = position;
+
+            //animacion de entrada de items
+            if (position > lastPosition) {
+
+                Animation animation = AnimationUtils.loadAnimation(context,
+                        R.anim.entrada_por_arriba);
+                notasViewHolder.itemView.startAnimation(animation);
+                lastPosition = position;
+
+            }
+            notasViewHolder.cargarNoticia(noticia);
+        }else {
+            FooterViewHolder footerViewHolder = (FooterViewHolder) holder;
+
 
         }
-        notasViewHolder.cargarNoticia(noticia);
+
+
+
 
 
     }
 
     @Override
     public int getItemCount() {
-        return listaDeNoticias.size();
+        return listaItems.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+
+        RecyclerViewItem recyclerViewItem = listaItems.get(position);
+
+        if (recyclerViewItem instanceof Noticia) {
+            return TIPO_NOTICIA;
+
+        } else if (recyclerViewItem instanceof Footer) {
+            return TIPO_FOOTER;
+        } else {
+            return super.getItemViewType(position);
+        }
+
     }
 
     private class NotasViewHolder extends RecyclerView.ViewHolder {
@@ -107,11 +154,10 @@ public class NoticiasAdapter extends RecyclerView.Adapter {
         public NotasViewHolder(View itemView) {
             super(itemView);
 
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    notificador.notificar(listaDeNoticias.get(getAdapterPosition()));
+                    notificador.notificarTouchCelda((Noticia) listaItems.get(getAdapterPosition()));
                 }
             });
 
@@ -125,22 +171,21 @@ public class NoticiasAdapter extends RecyclerView.Adapter {
         public void cargarNoticia(final Noticia noticia) {
 
             try {
-                Helper.cargarImagenes(imageViewDeLaNota, context, noticia.getEmbedded().getListaDeImagenes().get(0).getMedia_details().getSizes().getMedium().getSource_url());
+                Helper.cargarImagenes(imageViewDeLaNota, context, noticia.getEmbedded().getListaDeImagenes().get(0).getMedia_details().getSizes().getFull().getSource_url());
 
-            }catch (Exception e){
+            } catch (Exception e) {
                 try {
-                    Helper.cargarImagenes(imageViewDeLaNota,context,noticia.getEmbedded().getListaDeImagenes().get(0).getMedia_details().getSizes().getMedium().getSource_url());
+                    Helper.cargarImagenes(imageViewDeLaNota, context, noticia.getEmbedded().getListaDeImagenes().get(0).getMedia_details().getSizes().getLarge().getSource_url());
 
-                }catch (Exception e1){
-                    Helper.cargarImagenes(imageViewDeLaNota,context,noticia.getEmbedded().getListaDeImagenes().get(0).getMedia_details().getSizes().getThumbnail().getSource_url());
+                } catch (Exception e1) {
+                    Helper.cargarImagenes(imageViewDeLaNota, context, noticia.getEmbedded().getListaDeImagenes().get(0).getMedia_details().getSizes().getMedium_large().getSource_url());
 
                 }
             }
 
 
-            textViewTituloDeLaNota.setText(noticia.getTitle().getRendered());
-
-            textViewPreviewDeLaNota.setText(noticia.getExcerpt().getRendered());
+            textViewTituloDeLaNota.setText(Html.fromHtml(noticia.getTitle().getRendered()));
+            textViewPreviewDeLaNota.setText(Html.fromHtml(noticia.getExcerpt().getRendered()));
 
 
         }
@@ -148,8 +193,85 @@ public class NoticiasAdapter extends RecyclerView.Adapter {
 
     }
 
+    private class FooterViewHolder extends RecyclerView.ViewHolder{
+        private ImageView imageViewTwitter;
+        private ImageView imageViewFacebook;
+        private ImageView imageViewInstagram;
+        private ImageView imageViewPublicidad3;
+
+
+        public FooterViewHolder(View itemView) {
+            super(itemView);
+            imageViewTwitter = itemView.findViewById(R.id.buttonImageViewTwitter_footer);
+            imageViewFacebook = itemView.findViewById(R.id.buttonImageViewFacebook_footer);
+            imageViewInstagram = itemView.findViewById(R.id.buttonImageViewInstagram_footer);
+            imageViewPublicidad3 = itemView.findViewById(R.id.imageViewPublicidad3_footer);
+
+
+            imageViewTwitter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    notificador.notificarTouchRedSocial(Helper.REFERENCIA_TWITTER);
+                }
+            });
+
+            imageViewFacebook.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    notificador.notificarTouchRedSocial(Helper.REFERENCIA_FACEBOOK);
+                }
+            });
+
+            imageViewInstagram.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    notificador.notificarTouchRedSocial(Helper.REFERENCIA_INSTAGRAM);
+                }
+            });
+
+
+            new ControllerPublicidadesFirebase().traerListaDePublicidades(new ResultListener<List<Publicidad>>() {
+                @Override
+                public void finish(final List<Publicidad> resultado) {
+                    cargarPublicidad(resultado.get(2).getUrl(),imageViewPublicidad3);
+
+                    imageViewPublicidad3.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            notificador.notificarTouchPublicidad(resultado.get(2).getLink());
+                        }
+                    });
+                }
+            });
+
+        }
+
+
+
+        public void cargarPublicidad(String url, ImageView imageView) {
+
+            if (url.equals("")) {
+                return;
+            }
+
+            if (url.endsWith(".gif")) {
+                Glide.with(context)
+                        .load(url)
+                        .asGif()
+                        .crossFade()
+                        .into(imageView);
+            } else {
+                Glide.with(context)
+                        .load(url)
+                        .into(imageView);
+            }
+        }
+    }
+
 
     public interface Notificador {
-        void notificar(Noticia unaNoticia);
+        void notificarTouchCelda(Noticia unaNoticia);
+        void notificarTouchPublicidad(String link);
+        void notificarTouchRedSocial(Integer numero);
     }
 }

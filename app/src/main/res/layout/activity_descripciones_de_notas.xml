@@ -6,45 +6,76 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/blanco"
+    android:orientation="vertical"
+
     tools:context=".View.Activitys.DescripcionesDeNotasActivity">
 
+    <include layout="@layout/tolbarsecundaria" />
 
     <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
 
             <TextView
+
                 android:id="@+id/textViewTituloDeLaNota_activitydescripcionesdenotas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:gravity="center"
                 android:text="@string/mundo_futbol_una_muestra_con_mas_de_150_fotografias_video_e_instalaciones"
                 android:textColor="@color/negro"
-                android:textSize="24sp" />
+                android:textSize="25sp">
+
+
+            </TextView>
 
             <ImageView
-                android:scaleType="centerCrop"
                 android:id="@+id/imageViewDeLaNota_activitydescripcionesdenotas"
                 android:layout_width="320dp"
                 android:layout_height="300dp"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:scaleType="centerCrop" />
 
 
-            <WebView
-
-                android:id="@+id/webViewContenidoDeLaNota_activitydescripcionesdenotas"
+            <TextView
+                android:id="@+id/textViewContenidoDeLaNota1_activitydescripcionesdenotas"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textColor="@color/negro"
+                android:textSize="16sp">
 
-            </WebView>
+            </TextView>
+
+            <ImageView
+                android:id="@+id/imageViewPublicidad1_activitydescripcionesdelanota"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:id="@+id/textViewContenidoDeLaNota2_activitydescripcionesdenotas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textColor="@color/negro"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_margin="10dp"
+                android:id="@+id/imageViewPublicidad2_activitydescripcionesdenotas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal" />
 
         </LinearLayout>
     </ScrollView>
@@ -52,11 +83,11 @@
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/floatingButtonMenu_activitydescripcionesdenotas"
         android:layout_width="wrap_content"
-        app:fab_addButtonColorNormal="@color/negro"
         android:layout_height="wrap_content"
         android:layout_gravity="right|bottom"
+        android:layout_margin="10dp"
 
-        android:layout_margin="10dp">
+        app:fab_addButtonColorNormal="@color/negro">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatinButtonAgregarAFavoritos_activitydescripcionesdenotas"

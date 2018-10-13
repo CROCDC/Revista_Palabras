@@ -21,7 +21,6 @@
 
             <ImageView
                 android:id="@+id/imageViewDeLaNota_celdanota"
-
                 android:layout_width="360dp"
                 android:layout_height="300dp"
                 android:layout_gravity="center_horizontal"
@@ -31,7 +30,7 @@
 
             <TextView
                 android:id="@+id/textViewTituloDeLaNota_celdanota"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:alpha="0.8"
                 android:background="@color/negro"
