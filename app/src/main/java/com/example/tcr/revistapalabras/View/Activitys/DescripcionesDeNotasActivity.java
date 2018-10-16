@@ -86,13 +86,26 @@ public class DescripcionesDeNotasActivity extends AppCompatActivity {
         noticia = (Noticia) bundle.getSerializable(CLAVE_OBJETO_CONTENIDO);
 
 
-        primeraParte = noticia.getContent().getRendered().split("</p>")[0] + noticia.getContent().getRendered().split("</p>")[1];
+        try {
+            primeraParte = noticia.getContent().getRendered().split("</p>")[0] + noticia.getContent().getRendered().split("</p>")[1];
+
+        }catch (Exception e){
+            primeraParte = noticia.getTheDescription().split("</p>")[0] + noticia.getTheDescription().split("</p>")[1];
+
+        }
 
         primeraParte += "</p>";
 
 
-        segundaParte = noticia.getContent().getRendered().replaceFirst(noticia.getContent().getRendered().split("</p>")[0] + "</p>", "");
-        segundaParte = segundaParte.replaceFirst(noticia.getContent().getRendered().split("</p>")[1] + "</p>", "");
+        try {
+            segundaParte = noticia.getContent().getRendered().replaceFirst(noticia.getContent().getRendered().split("</p>")[0] + "</p>", "");
+            segundaParte = segundaParte.replaceFirst(noticia.getContent().getRendered().split("</p>")[1] + "</p>", "");
+        }catch (Exception e){
+            segundaParte = noticia.getTheDescription().replaceFirst(noticia.getTheDescription().split("</p>")[0] + "</p>", "");
+            segundaParte = segundaParte.replaceFirst(noticia.getTheDescription().split("</p>")[1] + "</p>", "");
+        }
+
+
 
 
         try {
@@ -103,7 +116,13 @@ public class DescripcionesDeNotasActivity extends AppCompatActivity {
                 Helper.cargarImagenes(imageViewDeLaNota, getApplicationContext(), noticia.getEmbedded().getListaDeImagenes().get(0).getMedia_details().getSizes().getLarge().getSource_url());
 
             } catch (Exception e1) {
-                Helper.cargarImagenes(imageViewDeLaNota, getApplicationContext(), noticia.getEmbedded().getListaDeImagenes().get(0).getMedia_details().getSizes().getMedium_large().getSource_url());
+                try {
+                    Helper.cargarImagenes(imageViewDeLaNota, getApplicationContext(), noticia.getEmbedded().getListaDeImagenes().get(0).getMedia_details().getSizes().getMedium_large().getSource_url());
+
+                }catch (Exception e2){
+                    Helper.cargarImagenes(imageViewDeLaNota, getApplicationContext(), noticia.getImagen());
+
+                }
 
             }
         }
@@ -113,7 +132,13 @@ public class DescripcionesDeNotasActivity extends AppCompatActivity {
         textViewContenidoDeLaNota2.setText(Html.fromHtml(segundaParte));
 
 
-        textViewTituloDeLaNota.setText(Html.fromHtml(noticia.getTitle().getRendered()));
+        try{
+            textViewTituloDeLaNota.setText(Html.fromHtml(noticia.getTitle().getRendered()));
+
+        }catch (Exception e){
+            textViewTituloDeLaNota.setText(Html.fromHtml(noticia.getTitleS()));
+
+        }
 
 
         floatingActionButtonCompartir.setOnClickListener(new View.OnClickListener() {
@@ -141,10 +166,16 @@ public class DescripcionesDeNotasActivity extends AppCompatActivity {
                         public void finish(Boolean resultado) {
 
                             if (resultado) {
-                                firebaseDatabase = FirebaseDatabase.getInstance();
-                                databaseReference = firebaseDatabase.getReference(Helper.REFERENCIA_CONTENIDO_FAVORITO).child(user.getUid());
-                                databaseReference.child(noticia.getId().toString()).setValue(new Noticia(noticia.getId(), noticia.getLink(), noticia.getTitle(), noticia.getContent(), noticia.getExcerpt(), noticia.getEmbedded(), noticia.getCategories()));
-                                FancyToast.makeText(getBaseContext(), "Nota agregada a favoritos", Toast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+                                Noticia noticiaFav = new Noticia(noticia.getEmbedded().getListaDeImagenes().get(0).getMedia_details().getSizes().getFull().getSource_url(),noticia.getId(),noticia.getLink(),noticia.getContent().getRendered(),noticia.getTitle().getRendered(),noticia.getExcerpt().getRendered());
+                               new ControlerContenidoFavoritoFirebase().agregarLaNoticiaAGuardado(noticiaFav, new ResultListener<Boolean>() {
+                                   @Override
+                                   public void finish(Boolean resultado) {
+                                       if (resultado){
+                                           FancyToast.makeText(getBaseContext(), "Nota agregada a favoritos", Toast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+                                       }
+                                   }
+                               });
+
                             } else {
 
                                 FancyToast.makeText(getBaseContext(), "Ya ha sido  agregada a favoritos", Toast.LENGTH_SHORT, FancyToast.ERROR, false).show();

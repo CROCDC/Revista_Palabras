@@ -72,8 +72,12 @@ public class DAONoticiaFavoritoFirebase {
     }
 
     public void agregarLaNoticiaAGuardado(Noticia noticia,final ResultListener<Boolean> escuchadorDelControlador){
-
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference(Helper.REFERENCIA_CONTENIDO_FAVORITO).child(user.getUid());
+        databaseReference.child(noticia.getId().toString()).setValue(noticia);
+        escuchadorDelControlador.finish(true);
     }
+
 
 
 }

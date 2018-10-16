@@ -230,7 +230,7 @@ public class AgendaAdapter extends RecyclerView.Adapter {
             new ControllerPublicidadesFirebase().traerListaDePublicidades(new ResultListener<List<Publicidad>>() {
                 @Override
                 public void finish(final List<Publicidad> resultado) {
-                    cargarPublicidad(resultado.get(4    ).getUrl(),imageViewPublicidad5);
+                    cargarPublicidad(resultado.get(4).getUrl(),imageViewPublicidad5);
 
                     imageViewPublicidad5.setOnClickListener(new View.OnClickListener() {
                         @Override

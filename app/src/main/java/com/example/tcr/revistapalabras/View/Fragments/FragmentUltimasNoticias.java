@@ -86,7 +86,6 @@ public class FragmentUltimasNoticias extends Fragment {
 
 
         recyclerViewNotas = view.findViewById(R.id.recyclerViewNotas_fragmentdentrodelmainactivity);
-        linearLayoutContenedorRedesSociales = view.findViewById(R.id.linearLayoutContenedorredessociales_fragmentultimasnoticias);
 
 
         recyclerViewNotas.setHasFixedSize(true);

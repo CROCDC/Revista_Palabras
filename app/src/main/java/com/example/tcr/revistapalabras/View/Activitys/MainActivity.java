@@ -273,9 +273,6 @@ public class MainActivity extends AppCompatActivity implements I_NotificadorHaci
                 case R.id.opcionAudioVisuales:
                     cargarFragmentPorCategoria(Helper.AUDIOVISUALES, getString(R.string.audiovisuales));
                     break;
-                case R.id.opcionBalancesyPerspectivas:
-                    cargarFragmentPorCategoria(Helper.BALANCESYPERSPECTIVAS, getString(R.string.balances_y_perspectivas));
-                    break;
                 case R.id.opcionBallet:
                     cargarFragmentPorCategoria(Helper.BALLET, getString(R.string.ballet));
                     break;

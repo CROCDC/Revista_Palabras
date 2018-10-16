@@ -21,6 +21,9 @@ public class Noticia extends RecyclerViewItem implements Serializable  {
     private Integer featured_media;
     private List<Integer> categories;//  a que categoria pertenece
     private String imagen;
+    private String theDescription;
+    private String titleS;
+    private String preview;
 
     @SerializedName("_embedded")
     @Expose
@@ -50,6 +53,24 @@ public class Noticia extends RecyclerViewItem implements Serializable  {
         this.embedded = embedded;
         this.categories = categories;
 
+    }
+
+    public Noticia(String coverImage,Integer id,String link,String theDescription,String title,String preview){
+        this.imagen = coverImage;
+        this.id = id;
+        this.link = link;
+        this.theDescription = theDescription;
+        this.titleS = title;
+        this.preview = preview;
+
+    }
+
+    public String getPreview() {
+        return preview;
+    }
+
+    public void setPreview(String preview) {
+        this.preview = preview;
     }
 
     public String getLink() {
@@ -114,6 +135,26 @@ public class Noticia extends RecyclerViewItem implements Serializable  {
     public List<Integer> getCategories() {
         return categories;
 
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getTheDescription() {
+        return theDescription;
+    }
+
+    public void setTheDescription(String theDescription) {
+        this.theDescription = theDescription;
+    }
+
+    public String getTitleS() {
+        return titleS;
+    }
+
+    public void setTitleS(String titleS) {
+        this.titleS = titleS;
     }
 
     public Links getLinks() {

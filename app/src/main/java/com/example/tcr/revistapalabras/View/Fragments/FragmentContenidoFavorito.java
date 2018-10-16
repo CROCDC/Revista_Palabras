@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.TextView;
+
+import com.example.tcr.revistapalabras.Model.Footer;
 import com.example.tcr.revistapalabras.Model.Noticia;
 import com.example.tcr.revistapalabras.R;
 import com.example.tcr.revistapalabras.Utils.ResultListener;
@@ -75,6 +77,7 @@ public class FragmentContenidoFavorito extends Fragment {
             @Override
             public void finish(List<Noticia> resultado) {
                 noticiasAdapter.setListaDeNoticias(resultado);
+                noticiasAdapter.agregarFooter(new Footer());
             }
         });
 

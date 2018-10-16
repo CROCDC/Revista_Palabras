@@ -44,10 +44,6 @@
         android:icon="@drawable/opcionaudiovisuales"
         android:id="@+id/opcionAudioVisuales"
         android:title="@string/audiovisuales" />
-    <item
-
-        android:id="@+id/opcionBalancesyPerspectivas"
-        android:title="@string/balances_y_perspectivas" />
 
     <item
         android:icon="@drawable/opcionballet"

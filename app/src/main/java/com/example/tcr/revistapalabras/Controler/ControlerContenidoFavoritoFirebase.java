@@ -37,4 +37,12 @@ public class ControlerContenidoFavoritoFirebase {
         });
 
     }
+    public void agregarLaNoticiaAGuardado(Noticia noticia,final ResultListener<Boolean> escuchadorDeLaVista){
+        new DAONoticiaFavoritoFirebase().agregarLaNoticiaAGuardado(noticia, new ResultListener<Boolean>() {
+            @Override
+            public void finish(Boolean resultado) {
+                escuchadorDeLaVista.finish(resultado);
+            }
+        });
+    }
 }

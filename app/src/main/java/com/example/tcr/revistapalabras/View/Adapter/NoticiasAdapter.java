@@ -178,14 +178,25 @@ public class NoticiasAdapter extends RecyclerView.Adapter {
                     Helper.cargarImagenes(imageViewDeLaNota, context, noticia.getEmbedded().getListaDeImagenes().get(0).getMedia_details().getSizes().getLarge().getSource_url());
 
                 } catch (Exception e1) {
-                    Helper.cargarImagenes(imageViewDeLaNota, context, noticia.getEmbedded().getListaDeImagenes().get(0).getMedia_details().getSizes().getMedium_large().getSource_url());
+                    try {
+                        Helper.cargarImagenes(imageViewDeLaNota, context, noticia.getEmbedded().getListaDeImagenes().get(0).getMedia_details().getSizes().getMedium_large().getSource_url());
+
+                    }catch (Exception e2){
+                        Helper.cargarImagenes(imageViewDeLaNota,context,noticia.getImagen());
+                    }
 
                 }
             }
 
 
-            textViewTituloDeLaNota.setText(Html.fromHtml(noticia.getTitle().getRendered()));
-            textViewPreviewDeLaNota.setText(Html.fromHtml(noticia.getExcerpt().getRendered()));
+            try {
+                textViewTituloDeLaNota.setText(Html.fromHtml(noticia.getTitle().getRendered()));
+                textViewPreviewDeLaNota.setText(Html.fromHtml(noticia.getExcerpt().getRendered()));
+            }catch (Exception expec){
+                textViewTituloDeLaNota.setText(Html.fromHtml(noticia.getTitleS()));
+                textViewPreviewDeLaNota.setText(Html.fromHtml(noticia.getPreview()));
+            }
+
 
 
         }
