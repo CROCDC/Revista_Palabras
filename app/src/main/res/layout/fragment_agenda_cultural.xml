@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/blanco"
     android:layout_height="match_parent"
+    android:background="@color/blanco"
     android:orientation="vertical"
     tools:context=".View.Fragments.FragmentAgendaCultural">
 
 
     <android.support.v7.widget.RecyclerView
-        android:background="@color/blanco"
         android:id="@+id/recyclerViewAgenda_fragmentagendacultural"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/blanco">
 
     </android.support.v7.widget.RecyclerView>
 
-</LinearLayout>
+    <ProgressBar
+
+        android:id="@+id/progressbar_fragmentagendacultural"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:theme="@style/AppTheme.BlackAccent" />
+
+</RelativeLayout>

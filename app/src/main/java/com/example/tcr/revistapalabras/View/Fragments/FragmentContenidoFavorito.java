@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.tcr.revistapalabras.Model.Footer;
@@ -34,6 +35,8 @@ public class FragmentContenidoFavorito extends Fragment {
     private TextView textViewNombreDeLaCategoria;
     private static NoticiasAdapter noticiasAdapter;
     private static I_NotificadorHaciaMainActivity notificador;
+
+    private static ProgressBar progressBar;
 
 
 
@@ -78,6 +81,8 @@ public class FragmentContenidoFavorito extends Fragment {
             public void finish(List<Noticia> resultado) {
                 noticiasAdapter.setListaDeNoticias(resultado);
                 noticiasAdapter.agregarFooter(new Footer());
+                progressBar.setVisibility(View.INVISIBLE);
+
             }
         });
 
@@ -97,6 +102,7 @@ public class FragmentContenidoFavorito extends Fragment {
 
         textViewNombreDeLaCategoria = view.findViewById(R.id.textViewNombreDeLaCategoria_fragmentcontenidofavorito);
         recyclerViewFavoritos = view.findViewById(R.id.recyclerViewCategorias_fragmentcontenidofavorito);
+        progressBar = view.findViewById(R.id.progressbar_framgnetcontenidofavorito);
 
         recyclerViewFavoritos.setHasFixedSize(true);
 

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.azoft.carousellayoutmanager.CarouselLayoutManager;
 import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
@@ -33,13 +34,9 @@ public class FragmentAgendaCultural extends Fragment {
     private CarouselLayoutManager layoutManager;
 
 
-    private LinearLayout linearLayoutContenedor;
     private RecyclerView recyclerView;
+    private ProgressBar progressBar;
 
-    private ImageView imageViewTwitter;
-    private ImageView imageViewFacebook;
-    private ImageView imageViewInstagram;
-    private ImageView imageViewPublicidad4;
 
 
     private I_NotificadorHaciaMainActivity notificador;
@@ -77,6 +74,7 @@ public class FragmentAgendaCultural extends Fragment {
         new ControlerNoticias().pedirListaDeNoticiassDeLaAgenda(1, 9, new ResultListener<List<Noticia>>() {
             @Override
             public void finish(List<Noticia> resultado) {
+                progressBar.setVisibility(View.INVISIBLE);
                 Helper.setearImagenesAUnaListaDeContenidoDeLaAgenda(agendaAdapter, resultado);
                 agendaAdapter.setListaDeItems(resultado);
                 agendaAdapter.agregarFooter();
@@ -91,6 +89,7 @@ public class FragmentAgendaCultural extends Fragment {
         View view = inflater.inflate(R.layout.fragment_agenda_cultural, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerViewAgenda_fragmentagendacultural);
+        progressBar = view.findViewById(R.id.progressbar_fragmentagendacultural);
 
         layoutManager = new CarouselLayoutManager(CarouselLayoutManager.VERTICAL);
         layoutManager.setPostLayoutListener(new CarouselZoomPostLayoutListener());

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 
 import com.example.tcr.revistapalabras.Controler.ControlerNoticias;
@@ -35,6 +36,7 @@ public class FragmentUltimasNoticias extends Fragment {
     private ControlerNoticias controlerNoticias;
     private I_NotificadorHaciaMainActivity notificador;
     private LinearLayout linearLayoutContenedorRedesSociales;
+    private ProgressBar progressBar;
 
 
     @Override
@@ -70,6 +72,7 @@ public class FragmentUltimasNoticias extends Fragment {
             public void finish(final List<Noticia> resultado) {
                 noticiasAdapter.setListaDeNoticias(resultado);
                 isLoading = false;
+                progressBar.setVisibility(View.INVISIBLE);
             }
 
 
@@ -86,6 +89,7 @@ public class FragmentUltimasNoticias extends Fragment {
 
 
         recyclerViewNotas = view.findViewById(R.id.recyclerViewNotas_fragmentdentrodelmainactivity);
+        progressBar = view.findViewById(R.id.progressBar_fragmentultimasnoticias);
 
 
         recyclerViewNotas.setHasFixedSize(true);
@@ -116,14 +120,17 @@ public class FragmentUltimasNoticias extends Fragment {
 
                 if (posicionActual >= (ultimaCelda - 2)) {
                     isLoading = true;
+                    progressBar.setVisibility(View.VISIBLE);
                     controlerNoticias.pedirListaDeLasUltimasNoticiasPublicadas(new ResultListener<List<Noticia>>() {
                         @Override
                         public void finish(final List<Noticia> resultado) {
 
 
                             if (resultado.isEmpty()){
+                                progressBar.setVisibility(View.INVISIBLE);
                                 noticiasAdapter.agregarFooter(new Footer());
                             }else {
+                                progressBar.setVisibility(View.INVISIBLE);
                                 isLoading = false;
                                 noticiasAdapter.agregarNotasALaLista(resultado);
                             }

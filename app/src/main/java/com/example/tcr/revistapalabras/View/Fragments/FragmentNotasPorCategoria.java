@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.tcr.revistapalabras.Controler.ControlerNoticias;
@@ -35,6 +36,7 @@ public class FragmentNotasPorCategoria extends Fragment {
     private TextView textViewNombreDeLaCategoria;
     private static Boolean estaCargando;
     private static Integer categoriaGlobal;
+    private static ProgressBar progressBar;
 
     private static I_NotificadorHaciaMainActivity notificador;
 
@@ -43,6 +45,7 @@ public class FragmentNotasPorCategoria extends Fragment {
         super.onAttach(context);
         notificador = (I_NotificadorHaciaMainActivity) context;
     }
+
     public static FragmentNotasPorCategoria fabricaDeFragmentPorCategoria(Integer categoria, String nombreDeLaCategoria) {
 
         categoriaGlobal = categoria;
@@ -75,7 +78,7 @@ public class FragmentNotasPorCategoria extends Fragment {
         controlerNoticias.pedirListaDeNoticiasPorCategoria(new ResultListener<List<Noticia>>() {
             @Override
             public void finish(final List<Noticia> resultado) {
-
+                progressBar.setVisibility(View.INVISIBLE);
                 noticiasAdapter.setListaDeNoticias(resultado);
                 estaCargando = false;
             }
@@ -104,6 +107,7 @@ public class FragmentNotasPorCategoria extends Fragment {
 
         textViewNombreDeLaCategoria = view.findViewById(R.id.textViewNombreDeLaCategoria_fragmentnotasporcategoria);
         recyclerViewCategorias = view.findViewById(R.id.recyclerViewCategorias_fragmentnotasporcategoria);
+        progressBar = view.findViewById(R.id.progressbar_fragmentNotasPorCategoria);
 
         recyclerViewCategorias.setHasFixedSize(true);
 
@@ -136,19 +140,22 @@ public class FragmentNotasPorCategoria extends Fragment {
                 if (posicionActual >= (ultimaCelda - 2)) {
 
                     estaCargando = true;
+                    progressBar.setVisibility(View.VISIBLE);
                     controlerNoticias.pedirListaDeNoticiasPorCategoria(new ResultListener<List<Noticia>>() {
                         @Override
                         public void finish(List<Noticia> resultado) {
 
-                            if (resultado.isEmpty()){
+                            if (resultado.isEmpty()) {
+                                progressBar.setVisibility(View.INVISIBLE);
                                 noticiasAdapter.agregarFooter(new Footer());
-                            }else {
+                            } else {
                                 estaCargando = false;
+                                progressBar.setVisibility(View.INVISIBLE);
                                 noticiasAdapter.agregarNotasALaLista(resultado);
                             }
 
                         }
-                    },categoriaGlobal);
+                    }, categoriaGlobal);
                 }
             }
         });

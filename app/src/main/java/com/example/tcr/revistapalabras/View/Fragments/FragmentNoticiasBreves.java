@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.tcr.revistapalabras.Controler.ControlerNoticias;
 import com.example.tcr.revistapalabras.Model.Footer;
@@ -39,6 +40,7 @@ public class FragmentNoticiasBreves extends Fragment {
     private LinearLayoutManager linearLayoutManager;
 
     private ControlerNoticias controlerNoticias;
+    private ProgressBar progressBar;
 
     public FragmentNoticiasBreves() {
         // Required empty public constructor
@@ -78,6 +80,7 @@ public class FragmentNoticiasBreves extends Fragment {
             public void finish(List<Noticia> resultado) {
                 noticiasAdapter.setListaDeNoticias(resultado);
                 estaCargando = false;
+                progressBar.setVisibility(View.INVISIBLE);
             }
         }, Helper.BREVES);
     }
@@ -89,6 +92,7 @@ public class FragmentNoticiasBreves extends Fragment {
         View view = inflater.inflate(R.layout.fragment_noticias_breves, container, false);
 
         recyclerViewListaDeNoticiasBreves = view.findViewById(R.id.recyclerViewListaDeNoticiasBreves_fragmentnoticiasbreves);
+        progressBar = view.findViewById(R.id.progressbar_fragmentnoticiasbreves);
 
         linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
 
@@ -111,13 +115,15 @@ public class FragmentNoticiasBreves extends Fragment {
                 if (posicionActual >= (ultimaCelda - 2)) {
 
                     estaCargando = true;
+                    progressBar.setVisibility(View.VISIBLE);
                     controlerNoticias.pedirListaDeNoticiasPorCategoria(new ResultListener<List<Noticia>>() {
                         @Override
                         public void finish(List<Noticia> resultado) {
                             if (resultado.isEmpty()){
+                                progressBar.setVisibility(View.INVISIBLE);
                                 noticiasAdapter.agregarFooter(new Footer());
                             }else {
-
+                                progressBar.setVisibility(View.INVISIBLE);
                                 estaCargando = false;
                                 noticiasAdapter.agregarNotasALaLista(resultado);
                             }

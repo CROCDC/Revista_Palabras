@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.tcr.revistapalabras.Controler.ControlerNoticias;
 import com.example.tcr.revistapalabras.Model.Footer;
@@ -33,6 +34,8 @@ public class FragmentResultadoDeLaBusqueda extends Fragment {
     private NoticiasAdapter noticiasAdapter;
 
     private I_NotificadorHaciaMainActivity notificador;
+
+    private ProgressBar progressBar;
 
     public FragmentResultadoDeLaBusqueda() {
         // Required empty public constructor
@@ -87,6 +90,7 @@ public class FragmentResultadoDeLaBusqueda extends Fragment {
             public void finish(List<Noticia> resultado) {
                 noticiasAdapter.setListaDeNoticias(resultado);
                 noticiasAdapter.agregarFooter(new Footer());
+                progressBar.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -99,6 +103,7 @@ public class FragmentResultadoDeLaBusqueda extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_resultado_de_la_busqueda, container, false);
 
         recyclerViewListaDeResultadosDeLaBusqueda = view.findViewById(R.id.recyclerViewListaDeResultadoDeLaBusqueda_fragmentresultadodelabusqueda);
+        progressBar = view.findViewById(R.id.progressbar_fragmentresultadodelabusqueda);
 
         recyclerViewListaDeResultadosDeLaBusqueda.setAdapter(noticiasAdapter);
 

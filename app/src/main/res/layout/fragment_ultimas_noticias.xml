@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayoutContenedor_fragmentultimasnoticas"
     android:layout_width="match_parent"
@@ -13,14 +13,18 @@
         android:background="@color/blanco"
         android:id="@+id/recyclerViewNotas_fragmentdentrodelmainactivity"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="2">
+        android:layout_height="wrap_content"
+        >
 
     </android.support.v7.widget.RecyclerView>
 
 
+    <ProgressBar
+        android:theme="@style/AppTheme.BlackAccent"
+        android:layout_centerInParent="true"
+        android:id="@+id/progressBar_fragmentultimasnoticias"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 
-
-
-</LinearLayout>
+</RelativeLayout>
