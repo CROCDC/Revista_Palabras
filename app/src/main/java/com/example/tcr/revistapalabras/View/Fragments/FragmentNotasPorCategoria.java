@@ -81,6 +81,12 @@ public class FragmentNotasPorCategoria extends Fragment {
                 progressBar.setVisibility(View.INVISIBLE);
                 noticiasAdapter.setListaDeNoticias(resultado);
                 estaCargando = false;
+
+                if (resultado.size() > 1){
+                    progressBar.setVisibility(View.INVISIBLE);
+                    noticiasAdapter.agregarFooter(new Footer());
+                    estaCargando = true;
+                }
             }
 
 
@@ -140,6 +146,7 @@ public class FragmentNotasPorCategoria extends Fragment {
                 if (posicionActual >= (ultimaCelda - 2)) {
 
                     estaCargando = true;
+
                     progressBar.setVisibility(View.VISIBLE);
                     controlerNoticias.pedirListaDeNoticiasPorCategoria(new ResultListener<List<Noticia>>() {
                         @Override

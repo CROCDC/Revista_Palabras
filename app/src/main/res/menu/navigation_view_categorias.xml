@@ -2,29 +2,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/opcionFavoritos"
-        android:icon="@drawable/ic_favorite_black_24dp"
-        android:title="@string/favoritos"
-        />
+        android:icon="@drawable/heartblack"
+        android:title="@string/favoritos" />
 
 
     <item
         android:id="@+id/opcionIdeas"
-        android:icon="@drawable/ideas"
-        android:title="@string/ideas"
-        />
+        android:icon="@drawable/opcionideas"
+        android:title="@string/ideas" />
 
     <item
         android:id="@+id/opcionLiteratura"
-        android:icon="@drawable/literatura"
-        android:title="@string/literatura"
-        />
+        android:icon="@drawable/opcionliteratura"
+        android:title="@string/literatura" />
 
 
     <item
         android:id="@+id/opcionFotografía"
-        android:title="@string/fotografía"
-        android:icon="@drawable/camara"
-        />
+        android:icon="@drawable/opcioncamara"
+        android:title="@string/fotografía" />
 
     <item
         android:id="@+id/opcionAmerica"
@@ -32,26 +28,26 @@
         android:title="@string/america" />
 
     <item
-        android:id="@+id/opcionArquitectura"
+        android:id="@+id/opcionarquitectura"
         android:icon="@drawable/opcionarquitectura"
         android:title="@string/arquitectura" />
     <item
-        android:icon="@drawable/opcionartesescenicas"
         android:id="@+id/opcionArtesEscenicas"
+        android:icon="@drawable/opcionartesescenicas"
         android:title="@string/artes_esc_nicas" />
 
     <item
-        android:icon="@drawable/opcionaudiovisuales"
         android:id="@+id/opcionAudioVisuales"
+        android:icon="@drawable/opcionaudiovisuales"
         android:title="@string/audiovisuales" />
 
     <item
-        android:icon="@drawable/opcionballet"
         android:id="@+id/opcionBallet"
+        android:icon="@drawable/opcionballet"
         android:title="@string/ballet" />
     <item
-        android:icon="@drawable/opcioncineyseries"
         android:id="@+id/opcionCineySeries"
+        android:icon="@drawable/opcioncineyseries"
         android:title="@string/cine_y_series" />
 
 

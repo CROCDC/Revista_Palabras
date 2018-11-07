@@ -9,14 +9,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.azoft.carousellayoutmanager.CarouselLayoutManager;
 import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
 import com.example.tcr.revistapalabras.Controler.ControlerNoticias;
+import com.example.tcr.revistapalabras.Controler.ControllerPublicidadesFirebase;
+import com.example.tcr.revistapalabras.Model.Footer;
 import com.example.tcr.revistapalabras.Model.Noticia;
+import com.example.tcr.revistapalabras.Model.Publicidad;
 import com.example.tcr.revistapalabras.R;
 import com.example.tcr.revistapalabras.Utils.Helper;
 import com.example.tcr.revistapalabras.Utils.ResultListener;
@@ -77,7 +78,10 @@ public class FragmentAgendaCultural extends Fragment {
                 progressBar.setVisibility(View.INVISIBLE);
                 Helper.setearImagenesAUnaListaDeContenidoDeLaAgenda(agendaAdapter, resultado);
                 agendaAdapter.setListaDeItems(resultado);
-                agendaAdapter.agregarFooter();
+
+               agendaAdapter.agregarFooter();
+
+
             }
         });
     }

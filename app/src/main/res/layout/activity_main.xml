@@ -53,8 +53,6 @@
         android:layout_gravity="start"
         android:background="@android:color/white"
         android:fitsSystemWindows="true"
-        app:arc_cropDirection="cropOutside"
-        app:arc_width="96dp"
         app:headerLayout="@layout/header_navigation_view"
         app:itemBackground="@android:color/white"
         app:menu="@menu/navigation_view_categorias" />

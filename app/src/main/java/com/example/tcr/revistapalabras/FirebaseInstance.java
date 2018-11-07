@@ -1,9 +1,6 @@
 package com.example.tcr.revistapalabras;
-import android.util.Log;
-
 
 import com.example.tcr.revistapalabras.DAO.DAOApiPushNotification;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
 

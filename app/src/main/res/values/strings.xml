@@ -32,11 +32,12 @@
 
     <string name="invitado">Invitado</string>
     <string name="favoritos">Favoritos</string>
-    <string name="busqueda_la_en_revista_palabras">Busqueda la en Revista Palabras</string>
+    <string name="busqueda_la_en_revista_palabras">Busqueda</string>
     <string name="breves">Breves</string>
     <string name="inicio_de_sesion">Inicio de sesion</string>
     <string name="fotografía">Fotografía</string>
     <string name="literatura">Literatura</string>
     <string name="ideas">Ideas</string>
+    <string name="no_se_han_encontrado_resultados">No se han encontrado resultados</string>
 
 </resources>

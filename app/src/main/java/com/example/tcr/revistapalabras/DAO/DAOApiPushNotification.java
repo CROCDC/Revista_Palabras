@@ -1,12 +1,7 @@
 package com.example.tcr.revistapalabras.DAO;
 
-import android.util.Log;
-import android.widget.Toast;
-
 import com.example.tcr.revistapalabras.Utils.Helper;
-import com.example.tcr.revistapalabras.Utils.ResultListener;
 import com.example.tcr.revistapalabras.Utils.ServiceToken;
-import com.example.tcr.revistapalabras.Utils.Token;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import okhttp3.MediaType;

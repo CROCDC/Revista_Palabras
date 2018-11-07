@@ -91,6 +91,11 @@ public class FragmentResultadoDeLaBusqueda extends Fragment {
                 noticiasAdapter.setListaDeNoticias(resultado);
                 noticiasAdapter.agregarFooter(new Footer());
                 progressBar.setVisibility(View.INVISIBLE);
+
+                if (resultado.isEmpty()){
+                    notificador.notificarSinResultados();
+
+                }
             }
         });
 

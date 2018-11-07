@@ -1,11 +1,10 @@
 package com.example.tcr.revistapalabras.View.Activitys;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.tcr.revistapalabras.R;
 import com.facebook.CallbackManager;

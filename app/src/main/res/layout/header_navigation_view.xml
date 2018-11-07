@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/headerNavigationView"
     android:layout_width="match_parent"
     android:layout_height="200dp"
@@ -10,7 +10,8 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_margin="20dp"
-        android:src="@drawable/acountnegro" />
+        android:src="@drawable/accountblack"
+         />
 
     <TextView
         android:id="@+id/textViewNombreDeUsuario"
@@ -23,22 +24,20 @@
         android:textSize="20sp" />
 
     <TextView
+        android:layout_gravity="right|bottom"
         android:id="@+id/buttonActionsAcounts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_margin="10dp"
+        android:text="@string/app_name"
         android:textColor="@color/negro"
         android:textSize="20sp" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@id/buttonActionsAcounts"
-        android:src="@drawable/lineagris" />
 
 
-</RelativeLayout>
+
+
+
+</LinearLayout>

@@ -2,7 +2,6 @@ package com.example.tcr.revistapalabras.View.Fragments;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,7 +18,6 @@ import com.example.tcr.revistapalabras.Model.Noticia;
 import com.example.tcr.revistapalabras.R;
 import com.example.tcr.revistapalabras.Utils.Helper;
 import com.example.tcr.revistapalabras.Utils.ResultListener;
-import com.example.tcr.revistapalabras.View.Activitys.DescripcionesDeNotasActivity;
 import com.example.tcr.revistapalabras.View.Adapter.NoticiasAdapter;
 
 import java.util.List;

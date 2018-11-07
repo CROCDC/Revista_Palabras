@@ -1,9 +1,9 @@
 package com.example.tcr.revistapalabras.View.Activitys;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.example.tcr.revistapalabras.R;
 

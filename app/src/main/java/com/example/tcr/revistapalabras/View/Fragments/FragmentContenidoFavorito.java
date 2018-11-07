@@ -14,13 +14,12 @@ import android.view.animation.LayoutAnimationController;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.tcr.revistapalabras.Controler.ControlerContenidoFavoritoFirebase;
 import com.example.tcr.revistapalabras.Model.Footer;
 import com.example.tcr.revistapalabras.Model.Noticia;
 import com.example.tcr.revistapalabras.R;
 import com.example.tcr.revistapalabras.Utils.ResultListener;
-
 import com.example.tcr.revistapalabras.View.Adapter.NoticiasAdapter;
-import com.example.tcr.revistapalabras.Controler.ControlerContenidoFavoritoFirebase;
 
 import java.util.List;
 
@@ -82,6 +81,10 @@ public class FragmentContenidoFavorito extends Fragment {
                 noticiasAdapter.setListaDeNoticias(resultado);
                 noticiasAdapter.agregarFooter(new Footer());
                 progressBar.setVisibility(View.INVISIBLE);
+
+                if (resultado.isEmpty()){
+                    notificador.notificarSinResultados();
+                }
 
             }
         });

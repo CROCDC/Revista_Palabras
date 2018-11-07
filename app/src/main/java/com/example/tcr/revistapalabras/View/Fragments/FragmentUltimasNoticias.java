@@ -15,7 +15,6 @@ import android.view.animation.LayoutAnimationController;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-
 import com.example.tcr.revistapalabras.Controler.ControlerNoticias;
 import com.example.tcr.revistapalabras.Model.Footer;
 import com.example.tcr.revistapalabras.Model.Noticia;

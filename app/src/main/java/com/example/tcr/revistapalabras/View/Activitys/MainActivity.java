@@ -2,9 +2,8 @@ package com.example.tcr.revistapalabras.View.Activitys;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -14,18 +13,17 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.tcr.revistapalabras.DAO.DAOApiPushNotification;
@@ -35,16 +33,15 @@ import com.example.tcr.revistapalabras.Utils.Helper;
 import com.example.tcr.revistapalabras.View.Adapter.ViewPagerAdapterPorListaDeFragments;
 import com.example.tcr.revistapalabras.View.Fragments.FragmentAgendaCultural;
 import com.example.tcr.revistapalabras.View.Fragments.FragmentContenidoFavorito;
-import com.example.tcr.revistapalabras.View.Fragments.FragmentUltimasNoticias;
 import com.example.tcr.revistapalabras.View.Fragments.FragmentNotasPorCategoria;
 import com.example.tcr.revistapalabras.View.Fragments.FragmentNoticiasBreves;
 import com.example.tcr.revistapalabras.View.Fragments.FragmentResultadoDeLaBusqueda;
+import com.example.tcr.revistapalabras.View.Fragments.FragmentUltimasNoticias;
 import com.example.tcr.revistapalabras.View.Fragments.I_NotificadorHaciaMainActivity;
+import com.example.tcr.revistapalabras.View.Fragments.SinResultadosFragment;
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.shashank.sony.fancytoastlib.FancyToast;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements I_NotificadorHaciaMainActivity {
 
@@ -79,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements I_NotificadorHaci
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         try {
             new DAOApiPushNotification().insertarToken();
@@ -125,8 +123,8 @@ public class MainActivity extends AppCompatActivity implements I_NotificadorHaci
         imageViewMenuHamburguesa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 drawerLayout.openDrawer(Gravity.START);
+                Helper.hideKeyboard(MainActivity.this);
             }
         });
 
@@ -135,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements I_NotificadorHaci
             @Override
             public void onClick(View view) {
                 if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                    //SIGN OUT
+
                     FirebaseAuth.getInstance().signOut();
                     LoginManager.getInstance().logOut();
 
@@ -161,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements I_NotificadorHaci
         tabLayoutPrincipal.setVisibility(View.VISIBLE);
         cardViewContenedorTabLayout.setVisibility(View.VISIBLE);
         if (editTextCampoDeBusqueda.getVisibility() == View.VISIBLE) {
-            editTextCampoDeBusqueda.setVisibility(View.INVISIBLE);
+            editTextCampoDeBusqueda.setVisibility(View.GONE);
             textViewTituloRevistaPalabras.setVisibility(View.VISIBLE);
         } else if (navigationView.getVisibility() == View.VISIBLE) {
             drawerLayout.closeDrawer(Gravity.START);
@@ -192,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements I_NotificadorHaci
 
         } else {
             textViewSesiones.setText("Iniciar Sesion");
-            imageViewFotoDePerfil.setImageResource(R.drawable.acountnegro);
+            imageViewFotoDePerfil.setImageResource(R.drawable.accountblack);
             textViewNombreDelUsuario.setText("Invitado");
 
 
@@ -247,6 +245,15 @@ public class MainActivity extends AppCompatActivity implements I_NotificadorHaci
         }
     }
 
+    @Override
+    public void notificarSinResultados() {
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        SinResultadosFragment sinResultadosFragment = new SinResultadosFragment();
+        cargarFragment(sinResultadosFragment);
+
+    }
+
 
     NavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener = new NavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -264,7 +271,7 @@ public class MainActivity extends AppCompatActivity implements I_NotificadorHaci
                 case R.id.opcionAmerica:
                     cargarFragmentPorCategoria(Helper.AMERICA, getString(R.string.america));
                     break;
-                case R.id.opcionArquitectura:
+                case R.id.opcionarquitectura:
                     cargarFragmentPorCategoria(Helper.ARQUITECTURA, getString(R.string.arquitectura));
                     break;
                 case R.id.opcionArtesEscenicas:
@@ -355,7 +362,7 @@ public class MainActivity extends AppCompatActivity implements I_NotificadorHaci
                     cargarFragment(FragmentResultadoDeLaBusqueda.fabricaDeFragmentsResultadoDeLaBusqueda(editTextCampoDeBusqueda.getText().toString()));
 
                     textViewTituloRevistaPalabras.setVisibility(View.VISIBLE);
-                    editTextCampoDeBusqueda.setVisibility(View.INVISIBLE);
+                    editTextCampoDeBusqueda.setVisibility(View.GONE);
                     editTextCampoDeBusqueda.setText("");
                 }
                 editTextCampoDeBusqueda.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -368,7 +375,7 @@ public class MainActivity extends AppCompatActivity implements I_NotificadorHaci
                             cargarFragment(FragmentResultadoDeLaBusqueda.fabricaDeFragmentsResultadoDeLaBusqueda(editTextCampoDeBusqueda.getText().toString()));
 
                             textViewTituloRevistaPalabras.setVisibility(View.VISIBLE);
-                            editTextCampoDeBusqueda.setVisibility(View.INVISIBLE);
+                            editTextCampoDeBusqueda.setVisibility(View.GONE);
                             editTextCampoDeBusqueda.setText("");
                         }
                     }

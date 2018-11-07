@@ -3,15 +3,18 @@ package com.example.tcr.revistapalabras.Utils;
   Creado por Camilo 05/06/2018.
  */
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.tcr.revistapalabras.Controler.ControlerImagenes;
-import com.example.tcr.revistapalabras.Model.Noticia;
 import com.example.tcr.revistapalabras.Model.Excerpt;
 import com.example.tcr.revistapalabras.Model.Imagen;
+import com.example.tcr.revistapalabras.Model.Noticia;
 import com.example.tcr.revistapalabras.R;
 import com.squareup.picasso.Picasso;
 
@@ -68,6 +71,17 @@ public class Helper {
         return Jsoup.parse(html).text();
     }
 
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 
     public static void acomodarPreviewDeNotasPorLista(List<Noticia> listaDeNoticia) {
         for (Integer i = 0; i < listaDeNoticia.size(); i++) {

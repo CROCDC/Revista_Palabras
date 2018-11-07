@@ -1,6 +1,5 @@
 package com.example.tcr.revistapalabras.Utils;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -11,7 +10,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 
 public class asyncTaskImageToBitmap extends AsyncTask<ImageBitmap, Void, Bitmap> {
 

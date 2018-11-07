@@ -1,6 +1,5 @@
 package com.example.tcr.revistapalabras;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -12,7 +11,6 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 
@@ -20,13 +18,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.example.tcr.revistapalabras.Controler.ControlerNoticias;
-import com.example.tcr.revistapalabras.Controler.ControlerImagenes;
 import com.example.tcr.revistapalabras.Model.Noticia;
-import com.example.tcr.revistapalabras.Model.ImageBitmap;
-import com.example.tcr.revistapalabras.Model.Imagen;
 import com.example.tcr.revistapalabras.Utils.Helper;
 import com.example.tcr.revistapalabras.Utils.MySingleton;
-import com.example.tcr.revistapalabras.Utils.asyncTaskImageToBitmap;
 import com.example.tcr.revistapalabras.Utils.ResultListener;
 import com.example.tcr.revistapalabras.View.Activitys.DescripcionesDeNotasActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
