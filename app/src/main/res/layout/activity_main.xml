@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.tcr.revistapalabras.View.Activitys.MainActivity">
+    tools:context="com.ar.tcr.revistapalabras.View.Activitys.MainActivity">
 
 
     <include layout="@layout/toolbar" />
