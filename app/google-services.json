@@ -8,24 +8,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:909271693019:android:2ffff6ee8cc47232",
+        "mobilesdk_app_id": "1:909271693019:android:5a8340206bde78d0",
         "android_client_info": {
-          "package_name": "com.example.tcr.revistapalabras"
+          "package_name": "com.ar.tcr.revistapalabras"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "909271693019-h80tgp217qoikdn5jfvu2j1nq2kgma1u.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.tcr.revistapalabras",
-            "certificate_hash": "b4c0a7d077c21dd00bbbb246ef11921b86f973cd"
-          }
-        },
-        {
-          "client_id": "909271693019-l0292jv69rp5vmllps4ovcg8mt0hqpca.apps.googleusercontent.com",
-          "client_type": 3
-        },
         {
           "client_id": "909271693019-l0292jv69rp5vmllps4ovcg8mt0hqpca.apps.googleusercontent.com",
           "client_type": 3
@@ -41,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "909271693019-l0292jv69rp5vmllps4ovcg8mt0hqpca.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2
